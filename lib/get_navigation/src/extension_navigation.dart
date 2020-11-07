@@ -234,7 +234,7 @@ extension ExtensionDialog on GetInterface {
 
     final themes = InheritedTheme.capture(
         from: context,
-        to: Navigator.of(context, rootNavigator: useRootNavigator)!.context);
+        to: Navigator.of(context, rootNavigator: useRootNavigator).context);
 
     return generalDialog<T>(
       pageBuilder: (buildContext, animation, secondaryAnimation) {
@@ -427,7 +427,6 @@ extension ExtensionBottomSheet on GetInterface {
         .push(GetModalBottomSheetRoute<T>(
       builder: (_) => bottomsheet,
       isPersistent: persistent,
-      theme: Theme.of(key.currentContext, shadowThemeOnly: true),
       isScrollControlled: isScrollControlled,
       barrierLabel:
           MaterialLocalizations.of(key.currentContext).modalBarrierDismissLabel,
