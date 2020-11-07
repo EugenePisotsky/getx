@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class GetModalBottomSheetRoute<T> extends PopupRoute<T> {
   GetModalBottomSheetRoute({
     this.builder,
-    this.theme,
+    this.capturedThemes,
     this.barrierLabel,
     this.backgroundColor,
     this.isPersistent,
@@ -25,7 +25,7 @@ class GetModalBottomSheetRoute<T> extends PopupRoute<T> {
         super(settings: settings);
   final bool isPersistent;
   final WidgetBuilder builder;
-  final ThemeData theme;
+  final CapturedThemes capturedThemes;
   final bool isScrollControlled;
   final Color backgroundColor;
   final double elevation;
@@ -67,8 +67,7 @@ class GetModalBottomSheetRoute<T> extends PopupRoute<T> {
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
-    final sheetTheme =
-        theme?.bottomSheetTheme ?? Theme.of(context).bottomSheetTheme;
+    final sheetTheme = Theme.of(context).bottomSheetTheme;
     // By definition, the bottom sheet is aligned to the bottom of the page
     // and isn't exposed to the top padding of the MediaQuery.
     Widget bottomSheet = MediaQuery.removePadding(
@@ -91,8 +90,7 @@ class GetModalBottomSheetRoute<T> extends PopupRoute<T> {
         ),
       ),
     );
-    if (theme != null) bottomSheet = Theme(data: theme, child: bottomSheet);
-    return bottomSheet;
+    return capturedThemes.wrap(bottomSheet);
   }
 }
 
