@@ -232,15 +232,14 @@ extension ExtensionDialog on GetInterface {
     assert(useRootNavigator != null);
     assert(debugCheckHasMaterialLocalizations(context));
 
-    final theme = Theme.of(context, shadowThemeOnly: true);
+    final themes = InheritedTheme.capture(
+        from: context,
+        to: Navigator.of(context, rootNavigator: useRootNavigator)!.context);
+
     return generalDialog<T>(
       pageBuilder: (buildContext, animation, secondaryAnimation) {
         final pageChild = widget;
-        Widget dialog = Builder(builder: (context) {
-          return theme != null
-              ? Theme(data: theme, child: pageChild)
-              : pageChild;
-        });
+        var dialog = themes.wrap(pageChild);
         if (useSafeArea) {
           dialog = SafeArea(child: dialog);
         }
